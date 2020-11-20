@@ -23,14 +23,10 @@ export default class App extends Component {
 
 
     UpdateTables = (BBrefUrl) => {
-        axios.get(BBrefUrl, config)
+        axios.get(`localhost:4000/api/bbref/${BBrefUrl}`, config)
             .then(response => {
-                const html = response.data;
-                const $ = cheerio.load(html);
-                const StatTables = $('.stats_table');
-                console.log(StatTables.length);
                 this.setState({
-                    tables: BBrefUrl
+                    tables: response.data.tables
                 });
             })
             .catch(console.error);
