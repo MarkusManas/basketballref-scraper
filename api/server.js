@@ -12,13 +12,19 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-api.route('/bbref/:link').get(function(req, res) {
-    axios.get(req.params.link)
+api.route('/bbref/').post(function(req, res) {
+    axios.get(req.body.link)
         .then( scraped => {
+            console.log(scraped);
             const html = scraped.data;
-            const $ = cheerio.load(html);
-            const StatTables = $('.stats_table');
-            res.json({tables: StatTables})
+            res.status(200).send(scraped)
+            //const $ = cheerio.load(html);
+            //const StatTables = $('.stats_table');
+            //console.log(StatTables);
+            //res.json({tables: StatTables})
+        })
+        .catch( err => {
+            console.log(err)
         });
 });
 
